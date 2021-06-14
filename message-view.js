@@ -4,26 +4,26 @@ _validationAll.messageView = {
 
     radio: { error: '', correct: '' },
 
-    email: { error: 'البريد الالكتيروني غير صحيح', correct: '' },
+    email: { error: 'sorry, this email is incorrect', correct: '' },
 
-    required: { error: 'هذه الحقل مطلوب', correct: '' },
+    required: { error: 'this field is required', correct: '' },
 
-    number: { error: 'الرقم غير صحيح', correct: '' },
+    number: { error: 'the figure is incorrect', correct: '' },
 
-    integer: { error: 'الرقم غير صحيح', correct: '' },
+    integer: { error: 'the figure is incorrect', correct: '' },
 
-    file: { error: 'تنسيق الملف هذا غير صحيح', correct: '' },
+    file: { error: 'this file format is incorrect', correct: '' },
 
-    url: { error: 'هذا الرابط غير صحيح', correct: '' },
+    url: { error: 'sorry, but this link is incorrect', correct: '' },
 
-    resetPassword: { error: 'عذرا ، لكن كلمة المرور غير متطابقة', correct: '' },
+    resetPassword: { error: 'sorry, but the password does not match', correct: '' },
 
     password: {
-        simple: { error: 'عذرًا ، لكن يجب أن تكون كلمة المرور 8 على الأقل', correct: '' },
+        simple: { error: 'sorry, but the password must be at least 8', correct: '' },
 
-        complex: { error: 'عذرًا ، لكن يجب أن تكون كلمة المرور 8 على الأقل وتحتوي على أحرف وأرقام', correct: '' },
+        complex: { error: 'sorry, but the password must be at least 8 and contain letters and numbers', correct: '' },
 
-        difficult: { error: 'عذرًا ، ولكن يجب أن تكون كلمة المرور 8 على الأقل وتحتوي على أحرف كبيرة وصغيرة وأرقام ورموز', correct: '' }
+        difficult: { error: 'sorry, but the password must be at least 8 and contain uppercase and lowercase letters, numbers and symbols', correct: '' }
     }
 
 }

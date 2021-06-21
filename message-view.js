@@ -16,6 +16,8 @@ _validationAll.messageView = {
 
     url: { error: 'sorry, but this link is incorrect', correct: '' },
 
+    phone: { error: 'sorry, but this phone number is incorrect', correct: '' },
+
     resetPassword: { error: 'sorry, but the password does not match', correct: '' },
 
     password: {

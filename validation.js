@@ -6,7 +6,10 @@ class _validationAll {
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
         this.messageView = _validationAll.messageView || { required: {} }
-
+        if (!this.input.value && input.value !== '') {
+            this.input = { value: input };
+            this.view = false;
+        }
     }
 
     error = (message, input = this.input) => {
@@ -108,7 +111,9 @@ class _validationAll {
         }
     }
 
-    password = (passwordLevel = 'simple', inputResetPassword = null) => {
+    password = (options = {}) => {
+        let passwordLevel = options.level || 'simple';
+        let inputResetPassword = options.resetPassword || null;
         let resetPassword = () => {
             if (inputResetPassword != null) {
                 if (this.input.value != inputResetPassword.value) {
@@ -124,8 +129,11 @@ class _validationAll {
                 if (!this.input.value.match(simpleMatch)) {
                     return this.error(['password', 'simple']);
                 } else {
-                    resetPassword();
-                    return this.correct(['password', 'simple']);
+                    if (inputResetPassword) {
+                        return resetPassword();
+                    } else {
+                        return this.correct(['password', 'simple']);
+                    }
                 }
                 break;
             case 'complex':
@@ -133,8 +141,11 @@ class _validationAll {
                 if (!this.input.value.match(complexMatch)) {
                     return this.error(['password', 'complex']);
                 } else {
-                    resetPassword();
-                    return this.correct(['password', 'complex']);
+                    if (inputResetPassword) {
+                        return resetPassword();
+                    } else {
+                        return this.correct(['password', 'complex']);
+                    }
                 }
                 break;
             case 'difficult':
@@ -142,8 +153,11 @@ class _validationAll {
                 if (!this.input.value.match(difficultMatch)) {
                     return this.error(['password', 'difficult']);
                 } else {
-                    resetPassword();
-                    return this.correct(['password', 'difficult']);
+                    if (inputResetPassword) {
+                        return resetPassword();
+                    } else {
+                        return this.correct(['password', 'difficult']);
+                    }
                 }
                 break;
 
@@ -173,7 +187,7 @@ class _validationAll {
 
     integer = (min, mix) => {
         let value = this.input.value;
-        if (!value.match(/[0-9]/) || value.length < min || value.length > mix) {
+        if (value.match(/[^0-9]/) || value.length < min || value.length > mix) {
             return this.error('integer');
         } else {
             return this.correct('integer');
@@ -196,7 +210,7 @@ class _validationAll {
     }
 
     url = () => {
-        var pattern = new RegExp('^(https?:\\/\\/)?' + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + '((\\d{1,3}\\.){3}\\d{1,3}))' + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + '(\\?[;&a-z\\d%_.~+=-]*)?' + '(\\#[-a-z\\d_]*)?$', 'i');
+        let pattern = new RegExp('^(https?:\\/\\/)?' + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + '((\\d{1,3}\\.){3}\\d{1,3}))' + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + '(\\?[;&a-z\\d%_.~+=-]*)?' + '(\\#[-a-z\\d_]*)?$', 'i');
         if (!pattern.test(this.input.value)) {
             return this.error('url');
         } else {
@@ -204,28 +218,58 @@ class _validationAll {
         }
     }
 
+    phone = (start, length) => {
+        let startValue = '';
+        let index;
+        console.log(this.input);
+        if (!Array.isArray(start)) {
+            let startValue = start;
+            start = [];
+            start.push(startValue);
+        }
+        start.forEach(S => {
+            startValue = '';
+            for (let i = 0; i < S.length; i++) { startValue += this.input.value[i] }
+            index = start.indexOf(startValue);
+        });
+        if (start[index] != startValue || length != this.input.value.length - start[index].length) {
+            return this.error('phone');
+        } else {
+            return this.correct('phone');
+        }
+    }
+
     rules = (rules = {}) => {
         let value = this.input.value,
             type = rules.type,
             min = rules.min,
-            mix = rules.mix;
+            max = rules.max;
 
         if (value.length === 0) {
             return this.error();
         }
 
-        if (type === 'string' && typeof value !== 'string') {
+        if (type === 'string' && typeof value !== 'string' || type === String && typeof value !== 'string') {
             return this.error('');
         }
 
-        if (type === 'number' && !value.match(/^(([0-9]{1,})|(([0-9]+\.)+[0-9]{1,}))$/)) {
-            return this.error('');
-        }
-        if (type === 'integer' && value.match(/[^0-9]/) || type === 'INT' && value.match(/[^0-9]/)) {
+        if (type === 'Number' && !this.number() || type === Number && !this.number()) {
             return this.error('');
         }
 
-        if (value.length > mix) {
+        if (type === 'integer' && !this.integer() || type === 'INT' && !this.integer()) {
+            return this.error('');
+        }
+
+        if (type === 'email' && !this.email()) {
+            return this.error('');
+        }
+
+        if (type === 'url' && !this.url()) {
+            return this.error('');
+        }
+
+        if (value.length > max) {
             return this.error('');
         }
 
@@ -239,3 +283,89 @@ class _validationAll {
     }
 }
 let validationAll = (input, options = {}) => new _validationAll(input, options.required, options.view, options.errorMessage, options.correctMessage);
+
+
+
+let vaalForm = document.getElementsByClassName('vaal-form');
+for (let form of vaalForm) {
+    let inputs = form.querySelectorAll('input');
+    let buttons = form.querySelectorAll('button');
+    inputs = [...inputs];
+    inputs.reverse();
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            let errors = 0;
+            let resetPassword = null;
+            inputs.forEach(input => {
+                if (input.classList.value.split(' ').indexOf('vaal-reset-password') >= 0) {
+                    resetPassword = input;
+                }
+            });
+            inputs.forEach(input => {
+                let allClass = input.classList;
+                let options = { required: input.required, errorMessage: input.getAttribute('vaal-msg-error'), correctMessage: input.getAttribute('vaal-msg-correct') }
+                if (input.required) {
+                    if (!validationAll(input).required()) {
+                        errors++;
+                    }
+                }
+                allClass.forEach(_class => {
+                    _class = _class.split('vaal-');
+                    if (_class[1]) {
+                        let max = input.getAttribute('vaal-max');
+                        let min = input.getAttribute('vaal-min');
+                        switch (_class[1]) {
+                            case 'email':
+                                let email = validationAll(input, options).email();
+                                !email ? email == null ? '' : errors++ : '';
+                                break;
+                            case 'password':
+                                let level = input.getAttribute('vaal-level');
+                                let password = validationAll(input, options).password({ level: level, resetPassword: resetPassword });
+                                !password ? password == null ? '' : errors++ : '';
+                                break;
+                            case 'file':
+                                let formats = input.getAttribute('vaal-formats').split(',');
+                                let file = validationAll(input, options).file(formats);
+                                !file ? file == null ? '' : errors++ : '';
+                                break;
+                            case 'url':
+                                let url = validationAll(input, options).url();
+                                !url ? url == null ? '' : errors++ : '';
+                                break;
+                            case 'number':
+                                let number = validationAll(input, options).number(min, max);
+                                !number ? number == null ? '' : errors++ : '';
+                                break;
+                            case 'integer':
+                                let integer = validationAll(input, options).integer(min, max);
+                                !integer ? integer == null ? '' : errors++ : '';
+                                break;
+                            case 'checkbox':
+                                let checkbox = alidationAll(input, options).checkbox();
+                                !checkbox ? checkbox == null ? '' : errors++ : '';
+                                break;
+                            case 'radio':
+                                let radio = validationAll(input, options).radio();
+                                !radio ? radio == null ? '' : errors++ : '';
+                                break;
+                            case 'phone':
+                                let start = input.getAttribute('vaal-start') || '';
+                                let length = input.getAttribute('vaal-length') || '';
+                                let phone = validationAll(input, options).phone(start.split(','), length);
+                                !phone ? phone == null ? '' : errors++ : '';
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                });
+            });
+            console.log(errors);
+            if (errors) {
+                e.preventDefault();
+            }
+        });
+    });
+}

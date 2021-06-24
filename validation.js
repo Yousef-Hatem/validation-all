@@ -1,11 +1,19 @@
 class _validationAll {
-    constructor(input, wanted = true, view = true, errorMessage, correctMessage) {
+    constructor(input, wanted, view, errorMessage, correctMessage) {
         this.input = input;
-        this.wanted = wanted;
-        this.view = view;
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
         this.messageView = _validationAll.messageView || { required: {} }
+        if (wanted !== true && wanted !== false) {
+            this.wanted = input.required;
+        } else {
+            this.wanted = wanted;
+        }
+        if (view !== true && view !== false) {
+            this.view = input.classList.value.split(' ').indexOf('form-control') >= 0 ? true : false;
+        } else {
+            this.view = view;
+        }
         if (!this.input.value && input.value !== '') {
             this.input = { value: input };
             this.view = false;

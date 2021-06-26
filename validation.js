@@ -86,7 +86,7 @@ class _validationAll {
         return true;
     }
 
-    checkbox = (show) => {
+    checkbox = () => {
         if (this.input.type == 'checkbox') {
             if (!this.input.checked) {
                 return this.error('checkbox');
@@ -98,7 +98,7 @@ class _validationAll {
         }
     }
 
-    radio = (show) => {
+    radio = () => {
         if (this.input.type == 'radio') {
             if (!this.input.checked) {
                 return this.error('radio');
@@ -183,19 +183,19 @@ class _validationAll {
         }
     }
 
-    number = (min, mix) => {
+    number = (min, max) => {
         let value = this.input.value;
         let numberMatch = /^(([0-9]{1,})|(([0-9]+\.)+[0-9]{1,}))$/;
-        if (!value.match(numberMatch) || value.length < min || value.length > mix) {
+        if (!value.match(numberMatch) || value.length < min || value.length > max) {
             return this.error('number');
         } else {
             return this.correct('number');
         }
     }
 
-    integer = (min, mix) => {
+    integer = (min, max) => {
         let value = this.input.value;
-        if (value.match(/[^0-9]/) || value.length < min || value.length > mix) {
+        if (value.match(/[^0-9]/) || value.length < min || value.length > max) {
             return this.error('integer');
         } else {
             return this.correct('integer');
@@ -261,7 +261,7 @@ class _validationAll {
             return this.error('');
         }
 
-        if (type === 'Number' && !this.number() || type === Number && !this.number()) {
+        if (type === 'number' && !this.number() || type === Number && !this.number()) {
             return this.error('');
         }
 
@@ -370,7 +370,6 @@ for (let form of vaalForm) {
                     }
                 });
             });
-            console.log(errors);
             if (errors) {
                 e.preventDefault();
             }

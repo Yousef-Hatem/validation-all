@@ -21,8 +21,8 @@ The **validation-all** library makes data validation in JavaScript very easy.
 
 ### Calling the library in project
 
-```html
-<script type="text/javascript" src="validation-all.js"></script>
+```js
+const validationAll = require('validation-all').default;
 ```
 
 ### Basic Usage

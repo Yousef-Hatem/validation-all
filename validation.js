@@ -1,9 +1,10 @@
+import messageView from "./message-view.js";
 class _validationAll {
     constructor(input, wanted, view, errorMessage, correctMessage) {
         this.input = input;
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
-        this.messageView = _validationAll.messageView || { required: {} }
+        this.messageView = messageView;
         if (wanted !== true && wanted !== false) {
             this.wanted = input.required;
         } else {
@@ -292,87 +293,90 @@ class _validationAll {
 }
 let validationAll = (input, options = {}) => new _validationAll(input, options.required, options.view, options.errorMessage, options.correctMessage);
 
-
-
-let vaalForm = document.getElementsByClassName('vaal-form');
-for (let form of vaalForm) {
-    let inputs = form.querySelectorAll('input');
-    let buttons = form.querySelectorAll('button');
-    inputs = [...inputs];
-    inputs.reverse();
-    buttons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            let errors = 0;
-            let resetPassword = null;
-            inputs.forEach(input => {
-                if (input.classList.value.split(' ').indexOf('vaal-reset-password') >= 0) {
-                    resetPassword = input;
-                }
-            });
-            inputs.forEach(input => {
-                let allClass = input.classList;
-                let options = { required: input.required, errorMessage: input.getAttribute('vaal-msg-error'), correctMessage: input.getAttribute('vaal-msg-correct') }
-                if (input.required) {
-                    if (!validationAll(input).required()) {
-                        errors++;
-                    }
-                }
-                allClass.forEach(_class => {
-                    _class = _class.split('vaal-');
-                    if (_class[1]) {
-                        let max = input.getAttribute('vaal-max');
-                        let min = input.getAttribute('vaal-min');
-                        switch (_class[1]) {
-                            case 'email':
-                                let email = validationAll(input, options).email();
-                                !email ? email == null ? '' : errors++ : '';
-                                break;
-                            case 'password':
-                                let level = input.getAttribute('vaal-level');
-                                let password = validationAll(input, options).password({ level: level, resetPassword: resetPassword });
-                                !password ? password == null ? '' : errors++ : '';
-                                break;
-                            case 'file':
-                                let formats = input.getAttribute('vaal-formats').split(',');
-                                let file = validationAll(input, options).file(formats);
-                                !file ? file == null ? '' : errors++ : '';
-                                break;
-                            case 'url':
-                                let url = validationAll(input, options).url();
-                                !url ? url == null ? '' : errors++ : '';
-                                break;
-                            case 'number':
-                                let number = validationAll(input, options).number(min, max);
-                                !number ? number == null ? '' : errors++ : '';
-                                break;
-                            case 'integer':
-                                let integer = validationAll(input, options).integer(min, max);
-                                !integer ? integer == null ? '' : errors++ : '';
-                                break;
-                            case 'checkbox':
-                                let checkbox = alidationAll(input, options).checkbox();
-                                !checkbox ? checkbox == null ? '' : errors++ : '';
-                                break;
-                            case 'radio':
-                                let radio = validationAll(input, options).radio();
-                                !radio ? radio == null ? '' : errors++ : '';
-                                break;
-                            case 'phone':
-                                let start = input.getAttribute('vaal-start') || '';
-                                let length = input.getAttribute('vaal-length') || '';
-                                let phone = validationAll(input, options).phone(start.split(','), length);
-                                !phone ? phone == null ? '' : errors++ : '';
-                                break;
-
-                            default:
-                                break;
-                        }
+try {
+    let vaalForm = document.getElementsByClassName('vaal-form') || {};
+    for (let form of vaalForm) {
+        let inputs = form.querySelectorAll('input');
+        let buttons = form.querySelectorAll('button');
+        inputs = [...inputs];
+        inputs.reverse();
+        buttons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                let errors = 0;
+                let resetPassword = null;
+                inputs.forEach(input => {
+                    if (input.classList.value.split(' ').indexOf('vaal-reset-password') >= 0) {
+                        resetPassword = input;
                     }
                 });
+                inputs.forEach(input => {
+                    let allClass = input.classList;
+                    let options = { required: input.required, errorMessage: input.getAttribute('vaal-msg-error'), correctMessage: input.getAttribute('vaal-msg-correct') }
+                    if (input.required) {
+                        if (!validationAll(input).required()) {
+                            errors++;
+                        }
+                    }
+                    allClass.forEach(_class => {
+                        _class = _class.split('vaal-');
+                        if (_class[1]) {
+                            let max = input.getAttribute('vaal-max');
+                            let min = input.getAttribute('vaal-min');
+                            switch (_class[1]) {
+                                case 'email':
+                                    let email = validationAll(input, options).email();
+                                    !email ? email == null ? '' : errors++ : '';
+                                    break;
+                                case 'password':
+                                    let level = input.getAttribute('vaal-level');
+                                    let password = validationAll(input, options).password({ level: level, resetPassword: resetPassword });
+                                    !password ? password == null ? '' : errors++ : '';
+                                    break;
+                                case 'file':
+                                    let formats = input.getAttribute('vaal-formats').split(',');
+                                    let file = validationAll(input, options).file(formats);
+                                    !file ? file == null ? '' : errors++ : '';
+                                    break;
+                                case 'url':
+                                    let url = validationAll(input, options).url();
+                                    !url ? url == null ? '' : errors++ : '';
+                                    break;
+                                case 'number':
+                                    let number = validationAll(input, options).number(min, max);
+                                    !number ? number == null ? '' : errors++ : '';
+                                    break;
+                                case 'integer':
+                                    let integer = validationAll(input, options).integer(min, max);
+                                    !integer ? integer == null ? '' : errors++ : '';
+                                    break;
+                                case 'checkbox':
+                                    let checkbox = alidationAll(input, options).checkbox();
+                                    !checkbox ? checkbox == null ? '' : errors++ : '';
+                                    break;
+                                case 'radio':
+                                    let radio = validationAll(input, options).radio();
+                                    !radio ? radio == null ? '' : errors++ : '';
+                                    break;
+                                case 'phone':
+                                    let start = input.getAttribute('vaal-start') || '';
+                                    let length = input.getAttribute('vaal-length') || '';
+                                    let phone = validationAll(input, options).phone(start.split(','), length);
+                                    !phone ? phone == null ? '' : errors++ : '';
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                });
+                if (errors) {
+                    e.preventDefault();
+                }
             });
-            if (errors) {
-                e.preventDefault();
-            }
         });
-    });
+    }
+} catch {
+
 }
+export default validationAll;

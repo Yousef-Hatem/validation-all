@@ -1,4 +1,4 @@
-_validationAll.messageView = {
+var messageView = {
 
     checkbox: { error: '', correct: '' },
 
@@ -27,5 +27,6 @@ _validationAll.messageView = {
 
         difficult: { error: 'sorry, but the password must be at least 8 and contain uppercase and lowercase letters, numbers and symbols', correct: '' }
     }
-
 }
+
+export default messageView;

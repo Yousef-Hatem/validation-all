@@ -17,7 +17,7 @@ The **validation-all** library makes data validation in JavaScript very easy.
 
 ### Using npm
 
-`npm install validation-all`
+`npm i validation-all`
 
 ### Calling the library in project
 

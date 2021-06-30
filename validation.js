@@ -5,19 +5,21 @@ class _validationAll {
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
         this.messageView = messageView;
-        if (wanted !== true && wanted !== false) {
-            this.wanted = input.required;
-        } else {
-            this.wanted = wanted;
-        }
-        if (view !== true && view !== false) {
-            this.view = input.classList.value.split(' ').indexOf('form-control') >= 0 ? true : false;
-        } else {
-            this.view = view;
-        }
         if (!this.input.value && input.value !== '') {
             this.input = { value: input };
             this.view = false;
+        }
+        else{
+            if (wanted !== true && wanted !== false) {
+            this.wanted = input.required;
+            } else {
+                this.wanted = wanted;
+            }
+            if (view !== true && view !== false) {
+                this.view = input.classList.value.split(' ').indexOf('form-control') >= 0 ? true : false;
+            } else {
+                this.view = view;
+            }
         }
     }
 
@@ -139,6 +141,7 @@ class _validationAll {
                     return this.error(['password', 'simple']);
                 } else {
                     if (inputResetPassword) {
+                        this.correct(['password', 'simple']);
                         return resetPassword();
                     } else {
                         return this.correct(['password', 'simple']);
@@ -151,6 +154,7 @@ class _validationAll {
                     return this.error(['password', 'complex']);
                 } else {
                     if (inputResetPassword) {
+                        this.correct(['password', 'complex']);
                         return resetPassword();
                     } else {
                         return this.correct(['password', 'complex']);
@@ -163,6 +167,7 @@ class _validationAll {
                     return this.error(['password', 'difficult']);
                 } else {
                     if (inputResetPassword) {
+                        this.correct(['password', 'difficult']);
                         return resetPassword();
                     } else {
                         return this.correct(['password', 'difficult']);
@@ -230,7 +235,6 @@ class _validationAll {
     phone = (start, length) => {
         let startValue = '';
         let index;
-        console.log(this.input);
         if (!Array.isArray(start)) {
             let startValue = start;
             start = [];

@@ -1,4 +1,4 @@
-messageView = {
+_validationAll.messageView = {
 
     checkbox: { error: '', correct: '' },
 
@@ -28,5 +28,3 @@ messageView = {
         difficult: { error: 'sorry, but the password must be at least 8 and contain uppercase and lowercase letters, numbers and symbols', correct: '' }
     }
 }
-
-module.exports = messageView;

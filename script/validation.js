@@ -1,10 +1,9 @@
-messageView = require('./message-view.js');
 class _validationAll {
     constructor(input, wanted, view, errorMessage, correctMessage) {
         this.input = input;
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
-        this.messageView = messageView;
+        this.messageView = _validationAll.messageView || { required: {} };
         if (!this.input.value && input.value !== '') {
             this.input = { value: input };
             this.view = false;
@@ -382,4 +381,3 @@ try {
 } catch {
 
 }
-export default validationAll;

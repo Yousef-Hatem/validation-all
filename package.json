@@ -1,0 +1,27 @@
+{
+    "name": "validation-all",
+    "version": "2.2.3",
+    "description": "A library of data validation tools.",
+    "main": "validation.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Yousef-Hatem/validation-all.git"
+    },
+    "keywords": [
+        "validation",
+        "validator",
+        "validate",
+        "javascript",
+        "input",
+        "form"
+    ],
+    "author": "Yousef Hatem",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Yousef-Hatem/validation-all/issues"
+    },
+    "homepage": "https://github.com/Yousef-Hatem/validation-all#readme"
+}

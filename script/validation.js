@@ -46,7 +46,6 @@ class _validationAll {
                     input.focus();
                 } else {
                     input.classList.remove('is-invalid');
-                    return null;
                 }
             } else {
                 if (input.type !== 'checkbox' && input.type !== 'radio') {
@@ -56,6 +55,9 @@ class _validationAll {
             }
         }
 
+        if (input.value.length == 0 && this.wanted != true) {
+            return null;
+        }
         return false;
     }
 

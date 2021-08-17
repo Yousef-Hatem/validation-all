@@ -22,11 +22,11 @@ The **validation-all** library makes data validation in JavaScript very easy.
 ### Calling the library in project
 #### ES5
 ```js
-const validationAll = require('validation-all').default;
+const validation = require('validation-all').default;
 ```
 #### ES6
 ```js
-import validationAll from 'validation-all';
+import validation from 'validation-all';
 ```
 #### HTML
 ```html
@@ -38,16 +38,16 @@ You can do the validation with JavaScript or HTML
 
 ## JavaScript
 ```js
-validationAll(input).email(); //=> true or false
+validation(input).email(); //=> true or false
 ```
 
-**input** {Element} the input you want to validate and you can also replace it with data directly for example `validationAll('test@gmail.com').email()`
+**input** {Element} the input you want to validate and you can also replace it with data directly for example `validation('test@gmail.com').email()`
 
 **email** verification type
 
 ### Options
 ```js
-validationAll(input, {
+validation(input, {
     required: true,
     view: true,
     errorMessage: 'error',
@@ -88,7 +88,7 @@ Verify the email is correct
 
 ### JavaScript Syntax
 ```js
-validationAll(input).email(); //=> true or false
+validation(input).email(); //=> true or false
 ```
 ### HTML Syntax
 ```html
@@ -100,11 +100,11 @@ To check how hard the password is there are 3 levels of difficulty
 
 ### JavaScript Syntax
 ```js
-validationAll(input).password(); //=> true or false
+validation(input).password(); //=> true or false
 ```
 #### Options
 ```js
-validationAll(input).password({
+validation(input).password({
     level: 'complex',
     resetPassword: reset
 }); //=> true or false
@@ -131,11 +131,11 @@ Verify that the file exists and check the format of the file
 
 ### JavaScript Syntax
 ```js
-validationAll(input).file(); //=> true or false
+validation(input).file(); //=> true or false
 ```
 #### Options
 ```js
-validationAll(input).file(['png','jpg']); //=> true or false
+validation(input).file(['png','jpg']); //=> true or false
 ```
 * **[formulas]** {Array} Array in the required formats
 
@@ -154,7 +154,7 @@ Verify phone numbers
 
 ### JavaScript Syntax
 ```js
-validationAll(input).phone('+20', 10); //=> true or false
+validation(input).phone('+20', 10); //=> true or false
 ```
 * **['+20']** Phone number key or you can type the numbers you want the phone number to start with
     * You can also add more than one number to the beginning of the phone number `Example: ['010', '011', '012']`
@@ -173,7 +173,7 @@ Check URL
 
 ### JavaScript Syntax
 ```js
-validationAll(input).url(); //=> true or false
+validation(input).url(); //=> true or false
 ```
 
 ### HTML Syntax
@@ -186,11 +186,11 @@ To check the number
 
 ### JavaScript Syntax
 ```js
-validationAll(input).number(); //=> true or false
+validation(input).number(); //=> true or false
 ```
 #### Options
 ```js
-validationAll(input).number(min, max);
+validation(input).number(min, max);
 ```
 * **min** {number} Specify min length
 * **max** {number} Specify max length
@@ -211,11 +211,11 @@ Check that the integer
 
 ### JavaScript Syntax
 ```js
-validationAll(input).integer(); //=> true or false
+validation(input).integer(); //=> true or false
 ```
 #### Options
 ```js
-validationAll(input).integer(min, max);
+validation(input).integer(min, max);
 ```
 * **min** {number} Specify min length
 * **max** {number} Specify max length
@@ -236,7 +236,7 @@ To make sure that he pressed the checkbox
 
 ### JavaScript Syntax
 ```js
-validationAll(input).checkbox(); //=> true or false
+validation(input).checkbox(); //=> true or false
 ```
 ### HTML Syntax
 ```html
@@ -248,7 +248,7 @@ To make sure he pressed the radio
 
 ### JavaScript Syntax
 ```js
-validationAll(input).radio(); //=> true or false
+validation(input).radio(); //=> true or false
 ```
 ### HTML Syntax
 ```html
@@ -260,7 +260,7 @@ Make the required input
 
 ### JavaScript Syntax
 ```js
-validationAll(input).required(); //=> true or false
+validation(input).required(); //=> true or false
 ```
 ### HTML Syntax
 ```html
@@ -272,7 +272,7 @@ Used to specify the type of verification, the maximum length and the minimum len
 
 ### JavaScript Syntax
 ```js
-validationAll(input).rules({
+validation(input).rules({
     type: 'url',
     min: 10,
     max: 55

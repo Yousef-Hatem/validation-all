@@ -1,4 +1,4 @@
-messageView = require('./message-view.js');
+var messageView = require('./message-view.js');
 class _validationAll {
     constructor(input, wanted, view, errorMessage, correctMessage) {
         this.input = input;

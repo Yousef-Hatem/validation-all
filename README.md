@@ -10,7 +10,7 @@ The **validation-all** library makes data validation in JavaScript very easy.
 * Ease of handling and use.
 * You can validate data without writing a single line of JavaScript.
 * Using Bootstrap to display the error message.
-* ES6 support.
+* ES6 support and ES5 support.
 * Control the display of messages through the **message-view** file
 
 ## Installation
@@ -22,11 +22,11 @@ The **validation-all** library makes data validation in JavaScript very easy.
 ### Calling the library in project
 #### ES5
 ```js
-const validation = require('validation-all').default;
+const validation = require('validation-all').validation;
 ```
 #### ES6
 ```js
-import validation from 'validation-all';
+import { validation } from 'validation-all';
 ```
 #### HTML
 ```html
@@ -282,3 +282,59 @@ validation(input).rules({
     * You can specify **string** or **number** or **integer** or **email** or **url**
 * **min** {number} Specify min length
 * **max** {number} Specify max length
+
+# message-view
+- This file contains all messages used for validation
+- These messages are used when messages are not specified
+## Writing Validation Messages
+You must first call `messageView`
+```js
+import { validation, messageView } from 'validation-all';
+```
+You will create an object containing the messages you want to use
+```js
+var validationMsg = {
+
+    checkbox: { error: '', correct: '' },
+
+    radio: { error: '', correct: '' },
+
+    email: { error: 'sorry, this email is incorrect', correct: '' },
+
+    required: { error: 'this field is required', correct: '' },
+
+    number: { error: 'the figure is incorrect', correct: '' },
+
+    integer: { error: 'the figure is incorrect', correct: '' },
+
+    file: { error: 'this file format is incorrect', correct: '' },
+
+    url: { error: 'sorry, but this link is incorrect', correct: '' },
+
+    phone: { error: 'sorry, but this phone number is incorrect', correct: '' },
+
+    resetPassword: { error: 'sorry, but the password does not match', correct: '' },
+
+    password: {
+        simple: { error: 'sorry, but the password must be at least 8', correct: '' },
+
+        complex: { error: 'sorry, but the password must be at least 8 and contain letters and numbers', correct: '' },
+
+        difficult: { error: 'sorry, but the password must be at least 8 and contain uppercase and lowercase letters, numbers and symbols', correct: '' }
+    }
+}
+for (const key in validationMsg) {messageView[key] = validationMsg[key]}
+```
+These are the default message names. You can add a new message name and use it
+```js
+userName: { error: 'This username is already in use', correct: '' }
+```
+* **userName** {message name} It will be used to invoke the message from the object
+#### To use any message you have added to the object (validationMsg) Use **error** or **correct**
+```js
+validation(input).correct('userName') // => '';
+validation(input).error('userName') // => 'This username is already in use';
+```
+* **userName** I type the name of the message you want to use
+* **error - correct**  If you use the error function, the error message will be displayed, and If you use the correct function, the correct message will be displayed
+* **input** the input in which the message will be displayed

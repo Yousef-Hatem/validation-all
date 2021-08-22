@@ -302,7 +302,7 @@ try {
     let vaalForm = document.getElementsByClassName('vaal-form') || {};
     for (let form of vaalForm) {
         let inputs = form.querySelectorAll('input');
-        let buttons = form.querySelectorAll('button');
+        let buttons = form.querySelectorAll('input[type=submit], button');
         inputs = [...inputs];
         inputs.reverse();
         buttons.forEach(button => {

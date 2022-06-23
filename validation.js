@@ -384,7 +384,5 @@ try {
 } catch {
 
 }
-export {
-    validationAll as validation,
-    messageView
-};
+
+module.exports = { validation: validationAll, messageView }

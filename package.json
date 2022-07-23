@@ -1,6 +1,6 @@
 {
     "name": "validation-all",
-    "version": "2.3.8",
+    "version": "2.3.9",
     "description": "A library of data validation tools.",
     "main": "validation.js",
     "scripts": {

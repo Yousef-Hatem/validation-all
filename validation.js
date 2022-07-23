@@ -355,7 +355,7 @@ try {
                                     !integer ? integer == null ? '' : errors++ : '';
                                     break;
                                 case 'checkbox':
-                                    let checkbox = alidationAll(input, options).checkbox();
+                                    let checkbox = validationAll(input, options).checkbox();
                                     !checkbox ? checkbox == null ? '' : errors++ : '';
                                     break;
                                 case 'radio':

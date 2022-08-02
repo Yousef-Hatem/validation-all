@@ -25,6 +25,6 @@ _validationAll.messageView = {
 
         complex: { error: 'Sorry, but the password must be at least 8 and contain letters and numbers', correct: '' },
 
-        difficult: { error: 'Sorry, but the password must be at least 8 and contain uppercase and lowercase letters, numbers and symbols', correct: '' }
+        difficult: { error: 'Sorry, but the password must be at least 8 and contain uppercase and lowercase letters, numbers, and symbols', correct: '' }
     }
 }

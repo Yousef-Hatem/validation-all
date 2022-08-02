@@ -304,69 +304,61 @@ try {
         let inputs = form.querySelectorAll('input');
         let buttons = form.querySelectorAll('input[type=submit], button');
         inputs = [...inputs];
-        inputs.reverse();
         buttons.forEach(button => {
             button.addEventListener('click', (e) => {
-                let errors = 0;
-                let resetPassword = null;
+                let error = false;
                 inputs.forEach(input => {
-                    if (input.classList.value.split(' ').indexOf('vaal-reset-password') >= 0) {
-                        resetPassword = input;
-                    }
-                });
-                inputs.forEach(input => {
+                    if (error) { return; }
                     let allClass = input.classList;
                     let options = { required: input.required, errorMessage: input.getAttribute('vaal-msg-error'), correctMessage: input.getAttribute('vaal-msg-correct') }
                     if (input.required) {
                         if (!validationAll(input).required()) {
-                            errors++;
+                            error = true;
                         }
                     }
                     allClass.forEach(_class => {
+                        if (error) { return; }
                         _class = _class.split('vaal-');
                         if (_class[1]) {
                             let max = input.getAttribute('vaal-max');
                             let min = input.getAttribute('vaal-min');
                             switch (_class[1]) {
                                 case 'email':
-                                    let email = validationAll(input, options).email();
-                                    !email ? email == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).email();
                                     break;
                                 case 'password':
                                     let level = input.getAttribute('vaal-level');
-                                    let password = validationAll(input, options).password({ level: level, resetPassword: resetPassword });
-                                    !password ? password == null ? '' : errors++ : '';
+                                    let resetPassword = null;
+                                    inputs.forEach(input => {
+                                        if (input.classList.value.split(' ').indexOf('vaal-reset-password') >= 0) {
+                                            resetPassword = input;
+                                        }
+                                    });
+                                    error = !validationAll(input, options).password({ level: level, resetPassword: resetPassword });
                                     break;
                                 case 'file':
                                     let formats = input.getAttribute('vaal-formats').split(',');
-                                    let file = validationAll(input, options).file(formats);
-                                    !file ? file == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).file(formats);
                                     break;
                                 case 'url':
-                                    let url = validationAll(input, options).url();
-                                    !url ? url == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).url();
                                     break;
                                 case 'number':
-                                    let number = validationAll(input, options).number(min, max);
-                                    !number ? number == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).number(min, max);
                                     break;
                                 case 'integer':
-                                    let integer = validationAll(input, options).integer(min, max);
-                                    !integer ? integer == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).integer(min, max);
                                     break;
                                 case 'checkbox':
-                                    let checkbox = validationAll(input, options).checkbox();
-                                    !checkbox ? checkbox == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).checkbox();
                                     break;
                                 case 'radio':
-                                    let radio = validationAll(input, options).radio();
-                                    !radio ? radio == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).radio();
                                     break;
                                 case 'phone':
                                     let start = input.getAttribute('vaal-start') || '';
                                     let length = input.getAttribute('vaal-length') || '';
-                                    let phone = validationAll(input, options).phone(start.split(','), length);
-                                    !phone ? phone == null ? '' : errors++ : '';
+                                    error = !validationAll(input, options).phone(start.split(','), length);
                                     break;
 
                                 default:
@@ -375,7 +367,7 @@ try {
                         }
                     });
                 });
-                if (errors) {
+                if (error) {
                     e.preventDefault();
                 }
             });

@@ -1,11 +1,11 @@
-validation-all
+Validation All
 ==============
 
 A library of data validation tools.
 
-The **validation-all** library makes data validation in JavaScript very easy.
+The **Validation All** library makes data validation in JavaScript very easy.
 
-## Why use validation-all?
+## Why use Validation All?
 
 * Ease of handling and use.
 * You can validate data without writing a single line of JavaScript.
@@ -20,13 +20,9 @@ The **validation-all** library makes data validation in JavaScript very easy.
 `npm i validation-all`
 
 ### Calling the library in project
-#### ES5
+#### JavaScript
 ```js
 const validation = require('validation-all').validation;
-```
-#### ES6
-```js
-import { validation } from 'validation-all';
 ```
 #### HTML
 ```html
@@ -282,6 +278,15 @@ validation(input).rules({
     * You can specify **string** or **number** or **integer** or **email** or **url**
 * **min** {number} Specify min length
 * **max** {number} Specify max length
+
+### HTML Syntax
+```html
+<input type="text" class="form-control vaal-rules" vaal-type="url" vaal-min="10" vaal-max="55">
+```
+* **vaal-type** Select the type of verification
+    * You can specify **string** or **number** or **integer** or **email** or **url**
+* **vaal-min** {number} Specify min length
+* **vaal-max** {number} Specify max length
 
 # message-view
 - This file contains all messages used for validation

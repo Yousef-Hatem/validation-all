@@ -283,12 +283,16 @@ class _validationAll {
             return this.error('');
         }
 
-        if (value.length > max) {
-            return this.error('');
+        if (max) {
+            if (value.length > max) {
+                return this.error('');
+            }
         }
 
-        if (value.length < min) {
-            return this.error('');
+        if (min) {
+            if (value.length < min) {
+                return this.error('');
+            }
         }
 
         if (value.length !== 0) {
@@ -359,6 +363,12 @@ try {
                                     let start = input.getAttribute('vaal-start') || '';
                                     let length = input.getAttribute('vaal-length') || '';
                                     error = !validationAll(input, options).phone(start.split(','), length);
+                                    break;
+                                case 'rules':
+                                    let type = input.getAttribute('vaal-type') || '';
+                                    let rules = { type: type, min: min, max: max };
+                                    console.log(rules);
+                                    error = !validationAll(input, options).rules(rules);
                                     break;
 
                                 default:

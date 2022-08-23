@@ -58,6 +58,7 @@ class _validationAll {
         if (input.value.length == 0 && this.wanted != true) {
             return null;
         }
+
         return false;
     }
 
@@ -366,7 +367,6 @@ try {
                                 case 'rules':
                                     let type = input.getAttribute('vaal-type') || '';
                                     let rules = { type: type, min: min, max: max };
-                                    console.log(rules);
                                     error = !validationAll(input, options).rules(rules);
                                     break;
 

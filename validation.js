@@ -1,5 +1,5 @@
 var messageView = require('./message-view.js');
-class _validationAll {
+class validationAll {
     constructor(input, wanted, view, errorMessage, correctMessage) {
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
@@ -308,7 +308,7 @@ class _validationAll {
         }
     }
 }
-let validationAll = (input, options = {}) => new _validationAll(input, options.required, options.view, options.errorMessage, options.correctMessage);
+let validation = (input, options = {}) => new validationAll(input, options.required, options.view, options.errorMessage, options.correctMessage);
 
 try {
     let vaalForm = document.getElementsByClassName('vaal-form') || {};
@@ -324,7 +324,7 @@ try {
                     let allClass = input.classList;
                     let options = { required: input.required, errorMessage: input.getAttribute('vaal-msg-error'), correctMessage: input.getAttribute('vaal-msg-correct') }
                     if (input.required) {
-                        if (!validationAll(input).required()) {
+                        if (!validation(input).required()) {
                             error = true;
                         }
                     }
@@ -336,7 +336,7 @@ try {
                             let min = input.getAttribute('vaal-min');
                             switch (_class[1]) {
                                 case 'email':
-                                    error = !validationAll(input, options).email();
+                                    error = !validation(input, options).email();
                                     break;
                                 case 'password':
                                     let level = input.getAttribute('vaal-level');
@@ -346,36 +346,36 @@ try {
                                             resetPassword = input;
                                         }
                                     });
-                                    error = !validationAll(input, options).password({ level: level, resetPassword: resetPassword });
+                                    error = !validation(input, options).password({ level: level, resetPassword: resetPassword });
                                     break;
                                 case 'file':
                                     let formats = input.getAttribute('vaal-formats').split(',');
-                                    error = !validationAll(input, options).file(formats);
+                                    error = !validation(input, options).file(formats);
                                     break;
                                 case 'url':
-                                    error = !validationAll(input, options).url();
+                                    error = !validation(input, options).url();
                                     break;
                                 case 'number':
-                                    error = !validationAll(input, options).number(min, max);
+                                    error = !validation(input, options).number(min, max);
                                     break;
                                 case 'integer':
-                                    error = !validationAll(input, options).integer(min, max);
+                                    error = !validation(input, options).integer(min, max);
                                     break;
                                 case 'checkbox':
-                                    error = !validationAll(input, options).checkbox();
+                                    error = !validation(input, options).checkbox();
                                     break;
                                 case 'radio':
-                                    error = !validationAll(input, options).radio();
+                                    error = !validation(input, options).radio();
                                     break;
                                 case 'phone':
                                     let start = input.getAttribute('vaal-start') || '';
                                     let length = input.getAttribute('vaal-length') || '';
-                                    error = !validationAll(input, options).phone(start.split(','), length);
+                                    error = !validation(input, options).phone(start.split(','), length);
                                     break;
                                 case 'rules':
                                     let type = input.getAttribute('vaal-type') || '';
                                     let rules = { type: type, min: min, max: max };
-                                    error = !validationAll(input, options).rules(rules);
+                                    error = !validation(input, options).rules(rules);
                                     break;
 
                                 default:
@@ -394,4 +394,4 @@ try {
 
 }
 
-module.exports = { validation: validationAll, messageView }
+module.exports = { validation, messageView }

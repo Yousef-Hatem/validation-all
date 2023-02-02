@@ -1,11 +1,17 @@
 var messageView = require('./message-view.js');
 class _validationAll {
     constructor(input, wanted, view, errorMessage, correctMessage) {
-        this.input = input;
         this.errorMessage = errorMessage;
         this.correctMessage = correctMessage;
         this.messageView = messageView;
-        if (!this.input.value && input.value !== '') {
+
+        if (!input || input === true || typeof input === "function") {
+            console.error(Error('An unverifiable value was passed'));
+        } else {
+            this.input = input;
+        }
+
+        if (!input.value && input.value !== '') {
             this.input = { value: input };
             this.view = false;
         } else {

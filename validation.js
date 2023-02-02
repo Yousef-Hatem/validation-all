@@ -183,6 +183,8 @@ class _validationAll {
     }
 
     required = () => {
+        this.wanted = true;
+        
         if (this.input.value.length === 0) {
             return this.error('required');
         } else {
